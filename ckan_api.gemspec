@@ -6,12 +6,12 @@ require 'ckan_api/version'
 Gem::Specification.new do |spec|
   spec.name          = "ckan_api"
   spec.version       = CkanApi::VERSION
-  spec.authors       = ["TODO: Write your name"]
+  spec.authors       = ["Braulio Chávez, Miguel Martínez"]
   spec.email         = ["braulio.vladimir.cn@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{A CKAN API Wrapper}
+  spec.summary       = %q{A CKAN API Wrapper}
   spec.homepage      = ""
-  spec.license       = "MIT"
+  spec.license       = "AGPL-3.0"
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
@@ -20,4 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "rspec"
+
+  spec.add_runtime_dependency "addressable"
 end
