@@ -35,4 +35,26 @@ describe CkanApi::Package do
       end
     end
   end
+
+  describe '#search' do
+
+    context 'without arguments' do
+      let(:result) { subject.search }
+
+      it 'should return a results list' do
+        result.should be_kind_of Hash
+      end
+    end
+
+    context 'with query parameter' do
+      let(:result) { subject.search({q: "author:Santa Catarina"}) }
+
+      it 'should return a list of matching packages' do
+        result.should be_kind_of Hash
+        result["results"].each do |package|
+          package["author"].should eq("Santa Catarina")
+        end
+      end
+    end
+  end
 end
