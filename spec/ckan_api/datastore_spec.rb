@@ -5,6 +5,7 @@ describe CkanApi::Datastore do
   subject { CkanApi::Datastore }
 
   it { should respond_to(:search) }
+  it { should respond_to(:search_sql) }
 
   describe '#search' do
 
@@ -19,7 +20,7 @@ describe CkanApi::Datastore do
 
     end
 
-    context 'with options artument' do
+    context 'with options argument' do
       let(:result) { subject.search('b02a85bb-7269-48f2-81ad-3e0e9ec5d843', {limit: '5'}) }
 
       it 'should return 5 resources per result' do
@@ -27,6 +28,16 @@ describe CkanApi::Datastore do
         result['records'].count.should be(5)
       end
     end
+  end
 
+  describe '#search_sql' do
+    context 'must respond to sql query' do
+      let(:result) { subject.search_sql('SELECT * from "b02a85bb-7269-48f2-81ad-3e0e9ec5d843" LIMIT 5') }
+
+      it 'should return query limited to 5 results' do
+        result.should be_kind_of Hash
+        result['records'].count.should be(5)
+      end
+    end
   end
 end
