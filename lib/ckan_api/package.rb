@@ -26,5 +26,15 @@ module CkanApi
       json_data['result']
     end
 
+    # Return the metadata of a dataset (package) and its resources.
+    # Params:
+    # +options+:: hash object with "id" field, which is obligatory
+    def self.show(options)
+      self.action = 'action/package_show'
+      request_url = form_request_url(self.action, options)
+      json_data = get_json_data(request_url)
+      json_data['result']
+    end
+
   end
 end

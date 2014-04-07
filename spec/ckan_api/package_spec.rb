@@ -57,4 +57,15 @@ describe CkanApi::Package do
       end
     end
   end
+
+  describe '#show' do
+
+    context 'with existing package' do
+      let(:result) { subject.show({id: "banco-mundial"}) }
+
+      it 'should return a list of the matching package' do
+        result.should be_kind_of Hash
+      end
+    end
+  end
 end
