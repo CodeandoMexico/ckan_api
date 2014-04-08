@@ -11,9 +11,7 @@ module CkanApi
     # +options+:: hash object storing CKAN API params
     def self.list(options={})
       self.action = 'action/package_list'
-      request_url = form_request_url(self.action, options)
-      json_data = get_json_data(request_url)
-      json_data['result']
+      get_request(self.action, options)
     end
 
     # Searches for packages satisfying a given search criteria.
@@ -21,9 +19,7 @@ module CkanApi
     # +options+:: hash object storing CKAN API params
     def self.search(options={})
       self.action = 'action/package_search'
-      request_url = form_request_url(self.action, options)
-      json_data = get_json_data(request_url)
-      json_data['result']
+      get_request(self.action, options)
     end
 
     # Return the metadata of a dataset (package) and its resources.
@@ -33,9 +29,7 @@ module CkanApi
     def self.show(package_id, options={})
       self.action = 'action/package_show'
       options['id'] = package_id
-      request_url = form_request_url(self.action, options)
-      json_data = get_json_data(request_url)
-      json_data['result']
+      get_request(self.action, options)
     end
 
   end
