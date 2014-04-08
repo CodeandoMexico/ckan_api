@@ -61,10 +61,12 @@ describe CkanApi::Package do
   describe '#show' do
 
     context 'with existing package' do
-      let(:result) { subject.show({id: "banco-mundial"}) }
+      package_id = 'da4877f0-0a05-49b3-bf59-d8fd2896566c' 
+      let(:result) { subject.show(package_id) } 
 
       it 'should return a list of the matching package' do
         result.should be_kind_of Hash
+        result['id'].should eq(package_id)
       end
     end
   end

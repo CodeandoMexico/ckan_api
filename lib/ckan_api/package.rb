@@ -28,9 +28,11 @@ module CkanApi
 
     # Return the metadata of a dataset (package) and its resources.
     # Params:
-    # +options+:: hash object with "id" field, which is obligatory
-    def self.show(options)
+    # +package_id+:: id or name of package to show
+    # +options+:: hash object storing CKAN API params
+    def self.show(package_id, options={})
       self.action = 'action/package_show'
+      options['id'] = package_id
       request_url = form_request_url(self.action, options)
       json_data = get_json_data(request_url)
       json_data['result']
