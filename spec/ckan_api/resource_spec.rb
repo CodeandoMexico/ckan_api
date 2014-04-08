@@ -20,4 +20,29 @@ describe CkanApi::Resource do
 
   end
 
+  describe '#search' do
+
+    context 'with query argument only' do
+      let(:result) { subject.search({name: 'personas', format: 'XLS'}) }
+
+      it 'should return a list of matching resources' do
+        result.should be_kind_of Hash
+        result['results'].each do |resource|
+          resource['name'].should match(%r{#{'personas'}}i)
+          resource['format'].should eq('XLS')
+        end
+      end
+
+    context 'with limit and query arguments' do
+      let(:result) { subject.search({name: 'personas'}, {limit: 5}) }
+
+      it 'should return a 5 elements list' do
+        result.should be_kind_of Hash
+        result['results'].count.should be(5)
+      end
+    end
+
+    end
+  end
+
 end
