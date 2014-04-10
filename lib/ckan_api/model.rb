@@ -18,5 +18,15 @@ module CkanApi
       JSON.parse(open(address).read)
     end
 
+    def self.post_json_data(address, auth_key, body)
+      uri = URI.parse(address)
+      http = Net::HTTP.new(uri.host, uri.port)
+      request = Net::HTTP::Post.new(uri.request_uri)
+      request.add_field('Authorization', auth_key)
+      request.body = body.to_json()
+      response = http.request(request)
+      response.body
+    end
+
   end
 end
