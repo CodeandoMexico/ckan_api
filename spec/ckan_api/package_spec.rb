@@ -6,6 +6,37 @@ describe CkanApi::Package do
 
   it { should respond_to(:list) }
 
+  describe '#create' do
+    before(:all){ CkanApi::Config.api_url = 'http://api.codeandomexico.org/api/3/' }
+    let(:name) { generate_random_string }
+    let(:key) { '7d85d965-67e5-4955-9706-46a5416b3ccc' }
+
+    context 'only with name argument' do
+      let(:result) { subject.create(name, key) }
+      it 'should return a results hash with name' do
+        result.should be_kind_of Hash
+        result["name"].should eq(name)
+      end
+    end
+
+    context 'with many optional arguments' do
+      let!(:body_params) do
+        {notes: "This is a description",
+         author: "Boby Tables",
+         title: "This is a title",
+         maintainer: "This is the maintainer"}
+      end
+
+      let(:result) { subject.create(name, key, body_params) }
+      it 'should return new package with specified arguments' do
+        puts result
+        body_params.each do |k, v|
+          result[k.to_s].should eq(v)
+        end
+      end
+    end
+  end
+
   describe '#list' do
 
     context 'without arguments' do
