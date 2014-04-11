@@ -5,6 +5,19 @@ require_relative 'helpers/uri_helper'
 module CkanApi
   class Package < Model
 
+    # Create a new package (dataset).
+    # Note that one must be authorized to create datasets
+    # If you specify a group, you must be authorized
+    # to add data to that grouop as well
+    # Params:
+    # +name+:: Name of the new package
+    # +body_params+:: hash object storing CKAN API params
+    def self.create(name, api_key, body_params={})
+      self.action = 'action/package_create'
+      body_params['name'] = name
+      post_request(self.action, api_key, body_params)
+    end
+
     # Return a list of the names of the site’s
     # datasets (packages).
     # Params:

@@ -25,7 +25,7 @@ module CkanApi
       request.add_field('Authorization', auth_key)
       request.body = body.to_json()
       response = http.request(request)
-      response.body
+      JSON.parse(response.body)
     end
 
   end

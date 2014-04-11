@@ -28,3 +28,13 @@ def get_request(action, query_params={}, field='result')
   json_data = get_json_data(request_url)
   json_data[field]
 end
+
+# Performs post requests oriented to CKAN
+# Params:
+# +action+:: The action endpoint to request
+# +api_key+:: User's key in ckan profile
+# +body_params+:: attributes of the newly created package
+def post_request(action, api_key, body_params, field='result')
+  json_data = post_json_data(action, api_key, body_params)
+  json_data[field]
+end
