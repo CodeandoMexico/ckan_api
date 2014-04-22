@@ -37,6 +37,22 @@ describe CkanApi::Package do
     end
   end
 
+  describe '#delete' do
+    before(:all){ CkanApi::Config.api_url = 'http://api.codeandomexico.org/api/3/' }
+    let(:name) { generate_random_string }
+    let(:key) { '7d85d965-67e5-4955-9706-46a5416b3ccc' }
+
+
+    context 'with existing package' do
+      let!(:result) { subject.create(name, key) }
+      it 'should delete package' do
+        subject.delete(name, key)
+        search = subject.search({q: name})
+        search["count"].should be 0
+      end
+    end
+  end
+
   describe '#list' do
 
     context 'without arguments' do
