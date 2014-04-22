@@ -134,6 +134,7 @@ describe CkanApi::Package do
   end
 
   describe '#show' do
+    before(:all){ CkanApi::Config.api_url = 'http://datamx.io/api/3/' }
     context 'with existing package' do
       package_id = 'da4877f0-0a05-49b3-bf59-d8fd2896566c' 
       let(:result) { subject.show(package_id) } 

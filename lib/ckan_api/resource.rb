@@ -3,6 +3,10 @@ require_relative 'helpers/uri_helper'
 module CkanApi
   class Resource < Model
 
+    def self.create(package_id, url, body_params={})
+      #Needs api key?
+    end
+
     # Return the metadata of a resource
     # Params:
     # +resource_id+:: "id" of the resource to show
