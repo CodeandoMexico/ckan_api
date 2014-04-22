@@ -20,7 +20,7 @@ describe CkanApi::Package do
     end
 
     context 'with many optional arguments' do
-      let!(:body_params) do
+      let(:body_params) do
         {notes: "This is a description",
          author: "Boby Tables",
          title: "This is a title",
@@ -42,13 +42,41 @@ describe CkanApi::Package do
     let(:name) { generate_random_string }
     let(:key) { '7d85d965-67e5-4955-9706-46a5416b3ccc' }
 
-
     context 'with existing package' do
-      let!(:result) { subject.create(name, key) }
+      before { subject.create(name, key) }
       it 'should delete package' do
         subject.delete(name, key)
         search = subject.search({q: name})
         search["count"].should be 0
+      end
+    end
+  end
+
+  describe '#update' do
+    before(:all){ CkanApi::Config.api_url = 'http://api.codeandomexico.org/api/3/' }
+    let(:name) { generate_random_string }
+    let(:key) { '7d85d965-67e5-4955-9706-46a5416b3ccc' }
+
+    context 'with existing package' do
+      before { subject.create(name, key) }
+      let(:body_params) do
+        {notes: "This is a description",
+         author: "Boby Tables",
+         title: "This is a title",
+         maintainer: "This is the maintainer"}
+      end
+      it 'should update and return package' do
+        updated_package = subject.update(name, key, body_params)
+        body_params.each do |k, v|
+          updated_package[k.to_s].should eq(v)
+        end
+      end
+    end
+
+    context 'with a non-existing package' do
+      it 'should return nil' do
+        updated_package = subject.update(name, key, {author: "Error"})
+        updated_package.should be nil
       end
     end
   end
@@ -106,7 +134,6 @@ describe CkanApi::Package do
   end
 
   describe '#show' do
-
     context 'with existing package' do
       package_id = 'da4877f0-0a05-49b3-bf59-d8fd2896566c' 
       let(:result) { subject.show(package_id) } 

@@ -19,12 +19,27 @@ module CkanApi
     end
 
     # Deletes a package (dataset)
-    # Note that one must be authorized to create datasets
+    # Note that one must be authorized to delete datasets
     # Params:
     # +id+:: the id or name of the package to delete
     def self.delete(id, api_key)
       self.action = 'action/package_delete'
       post_request(self.action, api_key, {id: id})
+    end
+
+    # Updates a package (dataset)
+    # Note that one must be authorized to update datasets
+    # Params:
+    # +id+:: the id or name of the package to delete
+    # +body_params+:: hash object storing CKAN API params of
+    #   package create
+    # All fields are modifiable except the name of the package
+    def self.update(id, api_key, options={})
+      self.action = 'action/package_update'
+      #Clones options to avoid problems in tests
+      body_params = options.clone
+      body_params['id'] = id
+      post_request(self.action, api_key, body_params)
     end
 
     # Return a list of the names of the site’s
