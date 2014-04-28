@@ -7,6 +7,12 @@ module CkanApi
       #Needs api key?
     end
 
+    def self.delete(id, api_key)
+      #TODO: not responding
+      self.action = 'action/resource_delete'
+      post_request(self.action, api_key, {id:id} )
+    end
+
     # Return the metadata of a resource
     # Params:
     # +resource_id+:: "id" of the resource to show
