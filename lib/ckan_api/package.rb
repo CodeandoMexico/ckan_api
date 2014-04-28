@@ -69,5 +69,16 @@ module CkanApi
       get_request(self.action, options)
     end
 
+    # Return a list of datasets (packages) that match a string.
+    # Params:
+    # +string+::the string to search for
+    # +options+: hash object where optional limit param (default 10)
+    #            could be sent
+    def self.autocomplete(string, options={})
+      self.action = 'action/package_autocomplete'
+      options['q'] = string
+      get_request(self.action, options)
+    end
+
   end
 end

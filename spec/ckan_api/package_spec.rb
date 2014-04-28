@@ -83,6 +83,7 @@ describe CkanApi::Package do
 
   describe '#list' do
 
+    before(:all){ CkanApi::Config.api_url = 'http://datamx.io/api/3/' }
     context 'without arguments' do
       let(:result) { subject.list() }
 
@@ -113,6 +114,7 @@ describe CkanApi::Package do
 
   describe '#search' do
 
+    before(:all){ CkanApi::Config.api_url = 'http://datamx.io/api/3/' }
     context 'without arguments' do
       let(:result) { subject.search }
 
@@ -144,5 +146,28 @@ describe CkanApi::Package do
         result['id'].should eq(package_id)
       end
     end
+  end
+
+  describe '#autocomplete' do
+    before(:all){ CkanApi::Config.api_url = 'http://datamx.io/api/3/' }
+    let(:string) { 'monte' }
+
+    context 'without limits argument' do
+      let(:result) { subject.autocomplete(string) }
+      it 'should return an array of matching packages' do
+        result.each do |match|
+          match["match_displayed"].should match(string)
+        end
+      end
+    end
+
+    context 'with limit argument' do
+      let(:limit) { 3 }
+      let(:result) { subject.autocomplete(string, limit: limit ) }
+      it 'should return an array of matches with a limit' do
+        result.size.should be == limit
+      end
+    end
+
   end
 end
